@@ -113,13 +113,13 @@ export default {
     loadUserData() {
       // 从localStorage获取用户数据
       const userData = JSON.parse(localStorage.getItem('user')) || {}
-      let data = {
+      let params = {
         id: userData.id
       }
-      getInfo(data)
+      getInfo(params)
         .then(res => {
-          if (res.code === 200) {
-            localStorage.setItem('user', JSON.stringify(res.data.list[0]))
+          if (res.code === 200) {            
+            localStorage.setItem('user', JSON.stringify(res.data))
             this.userInfo = {
               ...userData
             }

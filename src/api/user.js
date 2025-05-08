@@ -35,7 +35,7 @@ export function logout() {
  */
 export function getInfo(params) {
   return request({
-    url: '/query-users',
+    url: '/user-info',
     method: 'get',
     params
   })

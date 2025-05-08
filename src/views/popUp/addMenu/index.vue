@@ -230,10 +230,33 @@ export default {
       this.addMenuDialog = isPopup
       this.type = type
       this.menuList = menuList
-      if (scope) {
-        this.selectTitle = null
-        this.formData = { ...scope }
+      this.selectTitle = null
 
+      const defaultFormData = {
+        parent_id: null,
+        title: null,
+        roleId: null,
+        order_num: 0,
+        icon: null,
+        routerType: 0,
+        component: null,
+        redirect: null,
+        path: null,
+        url: null,
+        target: null,
+        affix: 0,
+        keep_alive: 0,
+        hide_in_menu: 0,
+        is_deleted: 0,
+        urlType: '0',
+        EmbeddedUrl: null
+      }
+
+      this.formData = scope
+        ? { ...defaultFormData, ...scope, title: type !== '新增' ? scope.title : null }
+        : { ...defaultFormData }
+
+      if (scope?.parent_id) {
         const parent = menuList.find(item => item.id === scope.parent_id)
         if (parent) {
           this.selectTitle = parent.title
@@ -291,7 +314,9 @@ export default {
           }
         })
         .catch(err => {
-          this.$message.warning(err.response.data.error)
+          console.log('err', err)
+
+          this.$message.warning(err.response.data.message)
         })
     },
     addIcon(icon) {

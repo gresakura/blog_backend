@@ -183,7 +183,6 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          console.log(data)
           deleteMenu(data.id).then(res => {
             if (res.code === 200) {
               this.$message({
@@ -192,7 +191,16 @@ export default {
               })
               this.getMenuList()
               this.$store.dispatch('menu/fetchMenu')
-              
+
+              // 检查当前页是否有数据，如果没有则跳转到上一页
+              const start = (this.currentPage - 1) * this.pageSize
+              const end = start + this.pageSize
+              if (this.menuList.length < end) {
+                if (this.currentPage > 1) {
+                  this.currentPage--
+                  this.handlePageChange(this.currentPage)
+                }
+              }
             }
           })
         })
@@ -204,8 +212,11 @@ export default {
   computed: {
     // 计算当前页数据
     currentPageData() {
-      const start = (this.currentPage - 1) * this.pageSize
-      const end = start + this.pageSize
+      if (!this.menuList || !Array.isArray(this.menuList)) {
+        return []
+      }
+      const start = Math.max(0, (this.currentPage - 1) * this.pageSize)
+      const end = Math.min(start + this.pageSize, this.menuList.length)
       return this.menuList.slice(start, end)
     }
   }

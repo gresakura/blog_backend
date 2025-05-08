@@ -132,8 +132,7 @@ export default {
       this.btnuserInfo = false
     },
     handleAvatarSuccess(res, file) {
-      console.log(res)
-      if (res.data.res.status === 200) {
+      if (res.code === 200) {
         this.$notify.success({
                 title: '成功',
                 message: '图片上传成功',

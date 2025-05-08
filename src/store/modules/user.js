@@ -26,10 +26,12 @@ const actions = {
       login({ account: account.trim(), password: password })
         .then(response => {
           const { data } = response
-          commit('SET_TOKEN', data.token)
-          commit('SET_NAME_ID', data.id)
-          localStorage.setItem('token', data.token)
-          localStorage.setItem('user', JSON.stringify(data))
+          console.log('data',data);
+          
+          commit('SET_TOKEN', data.token.access_token)
+          commit('SET_NAME_ID', data.userInfo.id)
+          localStorage.setItem('token', data.token.access_token)
+          localStorage.setItem('user', JSON.stringify(data.userInfo))
           resolve()
         })
         .catch(error => {

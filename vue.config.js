@@ -14,6 +14,12 @@ module.exports = defineConfig({
     client: {
       overlay: true, // 当出现编译错误或警告时，在浏览器中显示全屏覆盖
       progress: true // 在浏览器中以百分比显示编译进度
+    },
+    proxy: {
+      '/api': {
+        target: 'http://localhost:3002', // 后端API服务器的地址
+        changeOrigin: true, // 是否改变源（通常设置为true以处理跨域）
+      }
     }
   },
   configureWebpack: {
