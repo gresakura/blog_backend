@@ -24,6 +24,9 @@ async function initializeRoutes() {
   // 但如果 fetchMenu 不负责添加路由，您可能需要在这里调用 addRoutes
 }
 
+
+console.log(process.env.NODE_ENV, process.env.VUE_APP_BASE_API)
+
 // 在应用启动前初始化路由
 initializeRoutes().then(() => {
   new Vue({
